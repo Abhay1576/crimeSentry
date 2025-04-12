@@ -1,8 +1,7 @@
-# import of packages, Libraries and modules.
-#pip install flask
 from flask import Flask, render_template, request, flash, url_for, jsonify
 import pandas as pd
 import numpy as np
+import os
 from flask import json
 from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
@@ -58,7 +57,8 @@ def women():
     C_type = request.form.get("C_Type")  # Crime type fetching from UI
     state = request.form.get("state")  # State name fetching from UI
 
-    df = pd.read_csv("static/StateWiseCAWPred1990-2016.csv", header=None)
+    csv_path = os.path.join(os.path.dirname(__file__), 'static', 'StateWiseCAWPred1990-2016.csv')
+    df = pd.read_csv(csv_path, header=None)
 
     data1 = df.loc[df[0] == state].values  # Selecting State and its attributes.
     for x in data1:
@@ -141,7 +141,8 @@ def children():
     state = request.form.get("state")  # State name fetching from UI
 
     # reading CSV file.
-    df = pd.read_csv("static/Statewise Cases Reported of Crimes Committed Against Children 1994-2016.csv", header=None)
+    csv_path = os.path.join(os.path.dirname(__file__), 'static', 'Statewise Cases Reported of Crimes Committed Against Children 1994-2016.csv')
+    df = pd.read_csv(csv_path, header=None)
 
     data1 = df.loc[df[0] == state].values  # Selecting State and its attributes.
     for x in data1:
@@ -225,7 +226,8 @@ def ipc():
     state = request.form.get("state")  # State name fetching from UI
 
     # reading CSV file.
-    df = pd.read_csv("static/StateIPCPred2001_16.csv", header=None)
+    csv_path = os.path.join(os.path.dirname(__file__), 'static', 'StateIPCPred2001_16.csv')
+    df = pd.read_csv(csv_path, header=None)
 
     data1 = df.loc[df[0] == state].values  # Selecting State and its attributes.
     for x in data1:
@@ -309,7 +311,8 @@ def sll():
     state = request.form.get("state")  # State name fetching from UI
 
     # reading CSV file.
-    df = pd.read_csv("static/StateSLLPred2001_16.csv", header=None)
+    csv_path = os.path.join(os.path.dirname(__file__), 'static', 'StateSLLPred2001_16.csv')
+    df = pd.read_csv(csv_path, header=None)
 
     data1 = df.loc[df[0] == state].values  # Selecting State and its attributes.
     for x in data1:
@@ -391,25 +394,42 @@ def sll():
 def district_visual():
     try:
         year = int(request.form.get("year"))
-        state = request.form.get("state").strip()
-        crime_type = request.form.get("crime_type").strip().upper()
+        state = request.form.get("state", "").strip()
+        crime_type = request.form.get("crime_type", "").strip().upper()
 
-        print("🔎 FORM INPUTS →", year, state, crime_type)
+        # Load the CSV
+        csv_path = os.path.join(os.path.dirname(__file__), 'static', 'districtWiseCrime2001-2014.csv')
 
-        df = pd.read_csv("static/districtWiseCrime2001-2014.csv")
-        df.columns = df.columns.str.upper().str.strip()
-        print("📋 COLUMNS →", df.columns.tolist())
+        # Force UTF-8 with fallback encoding
+        try:
+            df = pd.read_csv(csv_path, encoding='utf-8')
+        except UnicodeDecodeError:
+            df = pd.read_csv(csv_path, encoding='ISO-8859-1')
 
-        if 'STATE' not in df.columns or 'YEAR' not in df.columns or crime_type not in df.columns:
-            return f"<h2>Invalid column(s) — check your CSV!</h2>"
+        # Normalize headers (ensure they’re strings)
+        df.columns = df.columns.astype(str).str.upper().str.strip()
 
-        filtered = df[(df['STATE'].str.upper() == state.upper()) & (df['YEAR'] == year)]
+        # DEBUG: Confirm structure
+        print("📄 Columns:", df.columns.tolist())
+        print("🔍 First row:", df.head(1).to_dict())
+
+        # Clean critical columns
+        for col in ['STATE', 'YEAR', 'DISTRICT', crime_type]:
+            if col not in df.columns:
+                return f"<h2>Missing column: {col}</h2>"
+
+        df['STATE'] = df['STATE'].astype(str).str.upper().str.strip()
+        df['DISTRICT'] = df['DISTRICT'].astype(str).str.strip()
+        df['YEAR'] = pd.to_numeric(df['YEAR'], errors='coerce')
+
+        # Filter the data
+        filtered = df[(df['STATE'] == state.upper()) & (df['YEAR'] == year)]
 
         if filtered.empty:
-            return f"<h2>No data for {crime_type} in {state} ({year})</h2>"
+            return f"<h2>No data found for {crime_type} in {state} ({year})</h2>"
 
         districts = filtered['DISTRICT'].tolist()
-        values = filtered[crime_type].tolist()
+        values = filtered[crime_type].apply(pd.to_numeric, errors='coerce').fillna(0).tolist()
 
         return render_template('district_visual.html',
                                districts=districts,
@@ -419,8 +439,10 @@ def district_visual():
                                state=state)
 
     except Exception as e:
-        print("❌ ERROR →", str(e))
+        import traceback
+        traceback.print_exc()
         return f"<h2>Server Error:</h2><pre>{str(e)}</pre>"
+
 
 
 # routing Path for About page.

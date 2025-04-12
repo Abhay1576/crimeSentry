@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', filename='images/favicon.ico') }}"
+    />
+
+    <title>Crime Sentry | About</title>
+
+    <!-- Modern Fonts + Icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #121212;
+        color: #f3f4f6;
+        margin: 0;
+        padding: 0;
+      }
+
+      .modern-container {
+        max-width: 1100px;
+        margin: auto;
+        padding: 80px 20px 40px;
+      }
+
+      .modern-container h1 {
+        font-size: 2.5rem;
+        color: #b41717;
+        margin-bottom: 20px;
+      }
+
+      .modern-container h2 {
+        font-size: 1.8rem;
+        color: #b41717;
+        margin-bottom: 15px;
+      }
+
+      .modern-container p {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #d1d5db;
+      }
+
+      pre {
+        background: #1f2937;
+        padding: 20px;
+        border-radius: 10px;
+        font-size: 1rem;
+        overflow-x: auto;
+        color: #e5e7eb;
+        border: 1px solid #374151;
+      }
+
+      header img {
+        height: 60px;
+      }
+
+      header h1 {
+        font-size: 24px;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: #d1d5db;
+        font-weight: 600;
+      }
+
+      footer {
+        text-align: center;
+        padding: 30px 10px;
+        margin-top: 50px;
+        background-color: #1a1a1a;
+        border-top: 1px solid #374151;
+        color: #9ca3af;
+      }
+
+      #IG {
+        margin-top: 10px;
+        height: 50px;
+      }
+
+      header nav ul {
+        display: flex;
+        gap: 20px;
+      }
+      @media (width < 380px) {
+        header h1 {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-[#121212] text-gray-100">
+    <header
+      class="bg-[#1a1a1a] shadow-md sticky top-0 z-50 border-b border-gray-700"
+    >
+      <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+        <a href="home.html"
+          ><img
+            src="{{url_for('static', filename='images/crimeSentry.jpg')}}"
+            class="h-16"
+            alt="Logo"
+        /></a>
+        <h1 class="text-2xl font-bold text-white">
+          <span class="text-red-600">Crime</span>Sentry
+        </h1>
+        <nav class="space-x-6 text-gray-300 font-semibold">
+          <ul>
+            <li>
+              <a href="About.html" class="hover:text-red-900 text-red-500"
+                >ABOUT</a
+              >
+            </li>
+            <li>
+              <a href="/home.html" class="hover:text-red-500">HOME</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <div class="modern-container animate__animated animate__fadeIn">
+      <h1>About the Crime Prediction System</h1>
+      <p>
+        In India, crime trends have been escalating in recent years, raising
+        concerns for public safety. This system is built to study crime
+        patterns, analyze demographic impacts, and use machine learning to
+        predict future cases.
+      </p>
+      <p>
+        The site offers visual insights and predictive modeling based on data
+        collected from the Indian government. It aims to identify high-risk
+        crime categories and support the development of effective control
+        measures.
+      </p>
+
+      <h2 style="margin-top: 40px">Sentry on Charge</h2>
+      <pre>
+  ABHAY RAINA             abhayraina1576@gmail.com
+        </pre
+      >
+    </div>
+
+    <footer class="bg-[#1a1a1a] text-center py-6 border-t border-gray-700">
+      <p class="text-gray-400 text-sm">
+        &copy; 2025 Indian Crime Analysis. All rights reserved.
+      </p>
+    </footer>
+  </body>
+</html>

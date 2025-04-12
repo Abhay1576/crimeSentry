@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>District-wise Crime Visualization</title>
+
+    <!-- TailwindCSS & Chart.js -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @media (max-width: 768px) {
+        #myChart {
+          width: 100% !important;
+          height: auto !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        #myChart {
+          min-width: 600px !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-100 font-[Poppins]">
+    <div class="max-w-6xl mx-auto py-10 px-4">
+      <h2 class="text-3xl font-bold text-center mb-4">
+        {{ crime_type }} Cases in {{ state }} - {{ year }}
+      </h2>
+
+      <div class="bg-white rounded-lg shadow p-6">
+        <canvas id="myChart" height="150"></canvas>
+      </div>
+    </div>
+
+    <script>
+      const ctx = document.getElementById("myChart").getContext("2d");
+
+      const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: {{ districts | tojson }},
+          datasets: [
+            {
+              type: 'bar',
+              label: '{{ crime_type }} Count',
+              data: {{ values | tojson }},
+              backgroundColor: 'rgba(75, 192, 192, 0.6)',
+              borderRadius: 5
+            },
+            {
+              type: 'line',
+              label: 'Trend Line',
+              data: {{ values | tojson }},
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 3,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: '{{ crime_type }} across districts of {{ state }}'
+            }
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Districts'
+              },
+              ticks: {
+                autoSkip: false,
+                maxRotation: 45,
+                minRotation: 45
+              }
+            },
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Crime Count'
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

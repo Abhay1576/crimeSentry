@@ -6,10 +6,6 @@ Crime Sentry is an intelligent web-based dashboard designed to analyze, predict,
 
 ⚡ Features:
 
-📥 Input Module: Upload and parse crime datasets (CSV format with State, District, Year, and crime metrics).
-
-🧹 Data Preprocessing: Cleans and prepares the data for accurate prediction (handles missing values, outliers, normalization).
-
 🧠 Crime Prediction: Uses trained machine learning models to forecast crime rates based on historical data.
 
 📈 Interactive Visualizations: Beautiful graphs and charts using Matplotlib, Seaborn, and Plotly to reveal trends & hotspots.

@@ -12,5 +12,5 @@ Crime Sentry is an intelligent web-based dashboard designed to analyze, predict,
 
 🧭 Filter by State/District/Year: Drill down to any district in India to analyze localized patterns 🔎
 
-🌐 Deployed Online: https://abhayrin.pythonanywhere.com/
+🌐 Demo: https://abhayrin.pythonanywhere.com/
 

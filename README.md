@@ -1,9 +1,11 @@
 🚨 Crime Sentry 🛡️
 
 🔍 Predictive Analytics & Visualization of Crime Patterns in India 🇮🇳
+
 Crime Sentry is an intelligent web-based dashboard designed to analyze, predict, and visualize crime trends across India. Powered by machine learning, this platform empowers researchers, analysts, and citizens to explore patterns in crime data — year-wise, state-wise, and even district-wise 📊🗺️.
 
-⚡ Features
+⚡ Features:
+
 📥 Input Module: Upload and parse crime datasets (CSV format with State, District, Year, and crime metrics).
 
 🧹 Data Preprocessing: Cleans and prepares the data for accurate prediction (handles missing values, outliers, normalization).

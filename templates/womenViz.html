@@ -58,11 +58,7 @@
       console.log(continents.length);
       for (i = 0; i < continents.length; i++) {
         var data = firstYear[continents[i]];
-        // One small note. We're creating a single trace here, to which
-        // the frames will pass data for the different years. It's
-        // subtle, but to avoid data reference problems, we'll slice
-        // the arrays to ensure we never write any new data into our
-        // lookup table:
+      
         traces.push({
           name: continents[i],
           x: data.x.slice(),
@@ -78,10 +74,7 @@
         });
       }
 
-      // Create a frame for each year. Frames are effectively just
-      // traces, except they don't need to contain the *full* trace
-      // definition (for example, appearance). The frames just need
-      // the parts the traces that change (here, the data).
+     
       var frames = [];
       for (i = 0; i < years.length; i++) {
         frames.push({
@@ -92,10 +85,7 @@
         });
       }
 
-      // Now create slider steps, one for each frame. The slider
-      // executes a plotly.js API command (here, Plotly.animate).
-      // In this example, we'll animate to one of the named frames
-      // created in the above loop.
+    
       var sliderSteps = [];
       for (i = 0; i < years.length; i++) {
         sliderSteps.push({
@@ -122,13 +112,7 @@
           type: "log",
         },
         hovermode: "closest",
-        // We'll use updatemenus (whose functionality includes menus as
-        // well as buttons) to create a play button and a pause button.
-        // The play button works by passing `null`, which indicates that
-        // Plotly should animate all frames. The pause button works by
-        // passing `[null]`, which indicates we'd like to interrupt any
-        // currently running animations with a new list of frames. Here
-        // The new list of frames is empty, so it halts the animation.
+    
         updatemenus: [
           {
             x: 0,
